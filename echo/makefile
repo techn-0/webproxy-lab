@@ -1,17 +1,13 @@
-CC = gcc
-  CFLAGS = -O2 -Wall -I .
-  LIB = -lpthread
+# echoclient만 파일명에 맞게 바꿔주면 됨.
+TARGET = echoserveri
+OBJS = 	echoserveri.o csapp.o
 
-  all: echoclient echoserveri
+%.o: %.c
+	gcc -c $<
 
-  echoclient: echoclient.c csapp.o
-      $(CC) $(CFLAGS) -o echoclient echoclient.c csapp.o $(LIB)
+$(TARGET) : $(OBJS)
+	gcc -o $(TARGET) $(OBJS) -lpthread
 
-  echoserveri: echoserveri.c csapp.o
-      $(CC) $(CFLAGS) -o echoserveri echoserveri.c csapp.o $(LIB)
-
-  csapp.o: csapp.c
-      $(CC) $(CFLAGS) -c csapp.c
-
-  clean:
-      rm -f *.o echoclient echoserveri csapp *~
+clean:
+	rm -f *.o
+	rm -f $(TARGET)
